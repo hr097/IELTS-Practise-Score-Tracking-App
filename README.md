@@ -8,7 +8,7 @@ Any Logo or other things used in application or by application developers are on
 <br>
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="Assets\Logo.png" alt="Logo" width="200" height="200">
+    <img src=".\assets\logos\login-logo.png" alt="Logo" width="200" height="200">
   </a>
 
 <h3 align="center">IELTS-Practise-Score-Tracking-App</h3>
