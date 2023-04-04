@@ -144,7 +144,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./searchstudent.php" aria-expanded="false" aria-controls="ui-basic">
                             <i class="icon-head menu-icon ti-search"></i>
-                            <span class="menu-title">Search Student</span>
+                            <span class="menu-title">Track Student</span>
                         </a>
                     </li>
 

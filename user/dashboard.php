@@ -10,6 +10,52 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
  $JAMES->ams_redirect("../login.php");
 }
 
+$student_card = "";
+$sql = "select * from Students;"; 
+$result = mysqli_query($JAMES->connection(),$sql);
+
+if(mysqli_num_rows($result)>=1)
+{   
+    $student = "";
+    while($record = mysqli_fetch_assoc($result))
+    {
+
+
+    if($record['stud_status']==1)
+    {
+        $status = "Active";
+    }
+    else
+    {
+        $status = "Inactive";
+    }
+    $student.=
+    "
+    <tr class='student'>
+    <td>".$record['stud_id']."</td>
+    <td>".$record['name']."</td>
+    <td>".$record['gender']."</td>
+    <td>".$record['dob']."</td>
+    <td>".$record['email']."</td>
+    <td>".$record['contact_no']."</td>
+    <td>".$record['coach_name']."</td>
+    <td>".$status."</td>
+    </td>
+    </tr>
+    ";
+
+    }
+
+    $student_card.=$student;
+}
+else
+{
+
+$student_card = "<tr>
+<td  colspan='6' style='font-size:1.2em;text-align:center;'>No Data to Display</td>
+</tr>";
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -45,7 +91,28 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
              </div>
         </div>
              
-        
+        <div class="table-responsive mt-4">
+            <table id="" class="table">
+                <thead>
+                    <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Birthdate</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Coach</th>
+                    <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="searchstudent">
+                    <tr>
+                        <?php echo $student_card; ?>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
         </div>
     </div>
 

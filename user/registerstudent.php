@@ -11,7 +11,7 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
 }
 
 $error = "";
-$student = array("spid"=>"","name"=>"","gender"=>"","dob"=>"","email"=>"","contact_no"=>"","course_name"=>"","joining_year"=>"","cur_semester"=>"","cur_division"=>"","cur_roll_no"=>"","stud_status"=>"","fathers_name"=>"","fathers_email"=>"","fathers_contact"=>"","mothers_name"=>"","mothers_email"=>"","mothers_contact"=>"","uid"=>"");
+$student = array("stud_id"=>"","name"=>"","gender"=>"","dob"=>"","email"=>"","contact_no"=>"","stud_status"=>"");
 $div_array = array("A","B","C","D","E","F","G","H","I");
 $arr_length = count($div_array);
 $button = "";
@@ -39,10 +39,9 @@ if(isset($_POST['updatestudent']))
     gender='$stud_gender',
     dob='$stud_dob',
     contact_no='$stud_contact',
-    stud_status=$stud_status,
-    where spid='$stud_spid';";
+    stud_status=$stud_status 
+    where stud_id=$stud_spid;";
 
-   
     
     if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
     {    
@@ -70,88 +69,46 @@ if(isset($_POST['addstudent']))
     $stud_dob = $_POST['studdob'];
     $stud_contact = $JAMES->sanitizeInput($_POST['studcontact']);
     $stud_status = $_POST['studstatus'];
+    $stud_coach_name = $_SESSION["_userId"];
 
-
-    $sql = "select DISTINCT A.*,B.uid from Students A,Rfid_uid_spid_map B where A.spid=B.spid and (B.uid='$stud_rfidno' OR A.spid='$stud_spid' OR A.email='$stud_email');";
+    $sql = "select * from  Students where email='$stud_email';";
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
 
     if(mysqli_num_rows($result)==1)
     {    
-        $error="<span id='response_msg' style='color:red;float:right;'>RFID UID/SPID/Email Already Registered!</span>";
+        $error="<span id='response_msg' style='color:red;float:right;'>Email Already Registered!</span>";
         $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
     }
     else
     {    
-        $password = $GLOBALS['JAMES']->generatePassword();
-        $password_enc = crypt($password,'$2a$10$1qAz2wSx3eDc4rFv5tGb5t');
 
-        $sql = "insert into Users (username,password,user_type) values('$stud_email','$password_enc',1);";
+        $sql= "
+        insert into Students 
+        (stud_id,name,gender,dob,email,contact_no,coach_name,stud_status)
+        values(
+        '$stud_spid',
+        '$stud_name',
+        '$stud_gender',
+        '$stud_dob',
+        '$stud_email',
+        '$stud_contact',
+        '$stud_coach_name',
+         $stud_status);";
+
 
         if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
         {    
 
-                $cid = findcourseId($course);
-
-                $sql= "
-                insert into Students 
-                (spid,name,gender,dob,email,contact_no,course_id,joining_year,cur_semester,cur_division,cur_roll_no,stud_status,
-                fathers_name,fathers_email,fathers_contact,mothers_name,mothers_email,mothers_contact)
-                values(
-                '$stud_spid',
-                '$stud_name',
-                '$stud_gender',
-                '$stud_dob',
-                '$stud_email',
-                '$stud_contact',
-                $cid,
-                $stud_joinyear,
-                $stud_sem,
-                '$stud_div',
-                $stud_rollno,
-                $stud_status,
-                '$stud_fname',
-                '$stud_femail',
-                '$stud_fcontact',
-                '$stud_mname',
-                '$stud_memail',
-                '$stud_mcontact');";
-
-            
-                if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
-                {    
-
-                    $sql="insert into Rfid_uid_spid_map (uid,spid) values('$stud_rfidno','$stud_spid');";
-                    if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
-                    {   
-                        if(sendLoginInvitation($stud_name,$stud_email,$password))
-                        {
-                            $error="<span id='response_msg' style='color:green;float:right;'>Student Added Successfully!</span>";
-                            $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
-                        }
-                        else
-                        {
-                            $error="<span id='response_msg' style='color:red;float:right;'>Failed to Send an Invitation!</span>";
-                            $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
-                        }
-                    }
-                    else
-                    { 
-                        $error="<span id='response_msg' style='color:red;float:right;'>Failed to Map Rfid!</span>";
-                        $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
-                    }
-                }
-                else
-                {
-                    $error="<span id='response_msg' style='color:red;float:right;'>Failed to Add Students!</span>";
-                    $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
-                }
+            $error="<span id='response_msg' style='color:green;float:right;'>Student Added Successfully!</span>";
+            $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
 
         }
         else
         {
-            $error="<span id='response_msg' style='color:red;float:right;'>Failed to Add Users!</span>";
+            $error="<span id='response_msg' style='color:red;float:right;'>Failed to Add Students!</span>";
             $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
         }
+
        
     }
 
@@ -161,10 +118,10 @@ if(isset($_POST['addstudent']))
 if(isset($_GET["spid"]))
 {   
 
-    $update_email = "readonly='true'";
+    $update_email = "readonly='true' ";
     $spid = $JAMES->sanitizeInput($_GET["spid"]);
 
-    $sql= "select A.*,B.*,C.uid from Students A,Courses B,Rfid_uid_spid_map C where A.spid=C.spid and A.course_id=B.course_id AND A.spid='$spid';";
+    $sql= "select * from Students where stud_id='$spid';";
 
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
     
@@ -175,7 +132,7 @@ if(isset($_GET["spid"]))
     }
     else
     {
-       $error="<span id='response_msg' style='color:red;float:right;'>SPID Not Found!</span>";
+       $error="<span id='response_msg' style='color:red;float:right;'>Student ID Not Found!</span>";
        $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
     }
 
@@ -305,20 +262,20 @@ else
                         <div class="card-body">
                         <input type="hidden" id="csrfToken" name="_csrfToken" value="<?php echo $JAMES->generateCsrfToken();?>" >
                             <h4 class="card-title">Student Regisration <?php echo $error;?></h4>
-                            <form autocomplete="off" class="forms-sample" name="addstudents" action='studentregistration.php' method="POST" enctype="multipart/form-data">
+                            <form autocomplete="off" class="forms-sample" name="addstudents" action='registerstudent.php' method="POST" enctype="multipart/form-data">
 
                               
 
                                 <!-- SPID and Email -->
                                 <div class="row">
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
-                                        <label>SPID</label>
-                                        <input type="text" autocomplete="off" name="studspid" pattern="[0-9]{10}" minlength="10"  maxlength="10" class="form-control" id="studspid" placeholder="XXXXXXXXXX" value="<?php echo $student['spid'];?>" <?php echo $update_email;?> required>
+                                        <label>Student ID</label>
+                                        <input type="text" autocomplete="off" name="studspid" pattern="[0-9]{10}" minlength="10"  maxlength="10" class="form-control" id="studspid" placeholder="XXXXXXXXXX" value="<?php echo $student['stud_id'];?>" <?php echo $update_email;?> >
                                     </div>
 
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                         <label>Email</label>
-                                        <input type="email" autocomplete="off" name="studemail" minlength="13"  maxlength="256" class="form-control" id="studemail" placeholder="example@vnsgu.ac.in" value="<?php echo $student['email'];?>" <?php echo $update_email;?> required>
+                                        <input type="email" autocomplete="off" name="studemail" minlength="13"  maxlength="256" class="form-control" id="studemail" placeholder="example@vnsgu.ac.in" value="<?php echo $student['email'];?>" required>
                                     </div>
                                 </div>
 
@@ -403,40 +360,40 @@ else
 
                                 <div class="form-group">
                                     <label>Father's Name</label>
-                                    <input type="text" autocomplete="off" name="fname" minlength="10"  maxlength="256" class="form-control dash"   value="<?php echo $student['fathers_name'];?>" placeholder="Enter Father's Name">
+                                    <input type="text" autocomplete="off" name="fname" minlength="10"  maxlength="256" class="form-control dash"   value="<?php //echo $student['fathers_name'];?>" placeholder="Enter Father's Name">
                                 </div>
 
 
                                 <div class="row">
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                         <label>Father's Email</label>
-                                        <input type="email"  autocomplete="off" name="femail" minlength="13"  maxlength="256" class="form-control dash" id="femail"  value="<?php echo $student['fathers_email'];?>"  placeholder="example@gmail.com">
+                                        <input type="email"  autocomplete="off" name="femail" minlength="13"  maxlength="256" class="form-control dash" id="femail"  value="<?php// echo $student['fathers_email'];?>"  placeholder="example@gmail.com">
                                            
                                     </div>
 
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                         <label>Father's Contact</label>
-                                        <input type="text" autocomplete="off" name="fcontact" minlength="14"  maxlength="14" class="form-control dash" id="fcontact"  value="<?php echo $student['fathers_contact'];?>" placeholder="+91 XXXXXXXXXX">
+                                        <input type="text" autocomplete="off" name="fcontact" minlength="14"  maxlength="14" class="form-control dash" id="fcontact"  value="<?php //echo $student['fathers_contact'];?>" placeholder="+91 XXXXXXXXXX">
                                             
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label>Mother's Name</label>
-                                    <input type="text" autocomplete="off" name="mname" minlength="10"  maxlength="256" class="form-control dash" id="mname" placeholder="Enter Mother's Name"  value="<?php echo $student['mothers_name'];?>">
+                                    <input type="text" autocomplete="off" name="mname" minlength="10"  maxlength="256" class="form-control dash" id="mname" placeholder="Enter Mother's Name"  value="<?php //echo $student['mothers_name'];?>">
                                 </div>
 
 
                                 <div class="row">
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                         <label>Mother's Email</label>
-                                        <input type="email" autocomplete="off" name="memail" minlength="13"  maxlength="256" class="form-control dash" id="memail"  value="<?php echo $student['mothers_email'];?>" placeholder="example@vnsgu.ac.in">
+                                        <input type="email" autocomplete="off" name="memail" minlength="13"  maxlength="256" class="form-control dash" id="memail"  value="<?php //echo $student['mothers_email'];?>" placeholder="example@vnsgu.ac.in">
                                             
                                     </div>
 
                                     <div class="form-group col-sm-6 col-md-6 col-lg-6">
                                         <label>Mother's Contact</label>
-                                        <input type="text" autocomplete="off"  name="mcontact" class="form-control dash" minlength="14"  maxlength="14" id="mcontact"  value="<?php echo $student['mothers_contact'];?>" placeholder="+91 XXXXXXXXXX">
+                                        <input type="text" autocomplete="off"  name="mcontact" class="form-control dash" minlength="14"  maxlength="14" id="mcontact"  value="<?php //echo $student['mothers_contact'];?>" placeholder="+91 XXXXXXXXXX">
                                             
                                     </div>
 
@@ -460,7 +417,7 @@ else
                                 <div class="row">
                                     <div class="form-group col-md-10">
                                         <label>Search Student</label>
-                                        <input type="text" name="spidsearch" pattern="[0-9]{10}" autocomplete="off" id="Stud_spid" minlength="10" maxlength="10" class="form-control" placeholder="Enter Student SPID">
+                                        <input type="text" name="spidsearch" pattern="" autocomplete="off" id="Stud_spid" minlength="3" maxlength="256" class="form-control" placeholder="Enter Student email">
                                     </div>
 
                                     <div class="form-group col-md-2 ">
@@ -475,11 +432,11 @@ else
                                 <table id="" class="table">
                                     <thead>
                                         <tr>
-                                            <th>SPID</th>
+                                            <th>Student ID</th>
                                             <th>Name</th>
                                             <th>Gender</th>
                                             <th>Birthdate</th>
-                                            <th>Course</th>
+                                            <th>Coach</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -515,4 +472,56 @@ else
     ?>
 </body>
 
+<script>
+$("#searchstudentbtn").on('click',function () {
+
+let csrfToken = $("#csrfToken").val();
+let spid = $("#Stud_spid").val();
+
+$.post(
+"api/findglobalstudent.php",
+{
+  _spid: spid,
+  _ct: csrfToken
+},
+function (data, status) {
+  if(status == "success")
+  {
+   $("#searchstudent").html(data);
+
+   $(".updatebtn").on('click',function () {
+    window.location.href = `registerstudent.php?spid=${$(this).attr('id')}`;
+   });
+
+  $(".deletstudbtn").on('click',function () {
+          
+            $.post(
+            "api/deleteglobalstudent.php",
+            {
+            _em: $(this).attr('id'),
+            _ct: csrfToken
+            },
+            function (data, status) {
+
+                if(data==1)
+                {
+                   window.location.reload(true);
+                }
+                else 
+                {
+                  $("#modalmsg").text("Student couldn't be deleted! Try again later.");
+                  $("#modal").css("display","flex");
+                }
+
+            });
+
+  });
+
+  }
+
+},"text"); // must write as text string will come
+});
+
+
+</script>
 </html>

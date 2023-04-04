@@ -75,13 +75,13 @@ class AMS
             switch($userType)
             {
                 case 1:{
-                        $this->userName = "";   //!modified by hr097
-                        $this->password = "";   //? add credentials
+                        $this->userName = "epiz_33942992";   //!modified by hr097
+                        $this->password = "9qfIxM4dd9rI4S";   //? add credentials
                         break;
                         }
                 case 2:{
-                        $this->userName = "";   //!modified by hr097
-                        $this->password = "";   //? add credentials
+                        $this->userName = "epiz_33942992";   //!modified by hr097
+                        $this->password = "9qfIxM4dd9rI4S";   //? add credentials
                         break;
                         }
                 default: 
@@ -322,19 +322,26 @@ class AMS
             $userType=2;
         }
         
+        $this->serverName = "sql210.epizy.com";
+
+        $databaseName = "epiz_33942992_ielts_buddy";    //! modified by hr097    
+
         if($_SERVER['SERVER_NAME']==="localhost")
         {
             $userType=3;
-        }
-       
 
+            $this->serverName = "localhost";
+
+            $databaseName = "ielts_buddy";    //! modified by hr097    
+        
+        }
+        
         $this->set_server_configuration();
 
         $this->todayDate= date("d/m/Y"); // fetch today date
         $this->todayTime = date("h:i:s A",  time()); // fetch current time
 
-        $this->serverName = "localhost"; 
-        $databaseName = "ielts_buddy";    //! modified by hr097    
+
 
         if(!$this->ams_db_connect($databaseName,$userType))
         {
