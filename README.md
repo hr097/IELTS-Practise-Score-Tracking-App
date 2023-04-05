@@ -17,7 +17,7 @@ Any Logo or other things used in application or by application developers are on
     <b>Practise score tracking app for IELTS coach</b>
     <br />
   </p>
-  <a  href="https://ieltsbuddy.ml " target="blank" >View Demo</a>
+  <a  href="http://ieltsbuddy.epizy.com" target="blank" >View Demo</a>
 </div>
 
 <br>
