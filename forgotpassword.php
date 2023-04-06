@@ -95,7 +95,7 @@ if($JAMES->checkSession()===true) // if session active than redirect user to his
                                     <!-- Error code div here -->
 
                                     <div class="mt-2 text-center">
-                                        <button type="button" class="btn btn-primary btn-icon-text"
+                                        <button type="button" class="btn btn-dark btn-icon-text"
                                             style="width:150px;" id="requestotpbtn">Request OTP</button>
                                            <br><br>
                                            <a href="./login.php"  class="page-title unselectable" style="color:#4815a8;text-decoration:underline;text-align:center;" target="_self">Back to login</a>
@@ -147,7 +147,7 @@ if($JAMES->checkSession()===true) // if session active than redirect user to his
                                     <!-- Error code div here -->
  
                                     <div class="mt-2 text-center">
-                                        <input type="button" id="submitotpbtn" class="btn btn-primary btn-icon-text"
+                                        <input type="button" id="submitotpbtn" class="btn btn-dark btn-icon-text"
                                             style="width: 150px;" value="Submit">
                                     </div>
                                 </form>

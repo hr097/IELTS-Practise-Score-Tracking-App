@@ -3,7 +3,16 @@ var course_name = "";
 
 $(document).ready(function(){
 
+    $('td').click(function(){
 
+  	var temp = $("<input>");
+    $("body").append(temp);
+    temp.val($(this).text()).select();
+    document.execCommand("copy");
+    temp.remove();
+    $("#myTooltip").text("Copied: " + $(this).text());
+    
+    });
     const h = new Date().getHours(); 
 
     curyear = new Date().getFullYear();

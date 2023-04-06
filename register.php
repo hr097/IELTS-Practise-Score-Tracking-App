@@ -135,7 +135,7 @@ if($JAMES->checkSession()===true) // if session active than redirect user to his
                                     -->
 
                                     <div class="mt-2 text-center">
-                                        <input type="button" class="btn btn-primary btn-icon-text" name="Register" id="register" style="width:150px;height:46px;" value="Register">
+                                        <input type="button" class="btn btn-dark btn-icon-text" name="Register" id="register" style="width:150px;height:46px;" value="Register">
                                         <br>
                                         <p style="text-align:center;font-size:0.8em;position:relative;top:30px;"><a style='text-decoration:none;color:black;' href="login.php">Already a Registered User ?</a></p>  
                         

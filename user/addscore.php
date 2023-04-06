@@ -23,7 +23,7 @@ if(isset($_POST['addscore']))
     $r = $JAMES->sanitizeInput($_POST['scoreBoxReading']);
     $l = $JAMES->sanitizeInput($_POST['scoreBoxListening']);
     $s = $_POST['scoreBoxSpeaking'];
-    $w = $_POST['scoreBoxwriting'];
+    $w = $_POST['scoreBoxWriting'];
     $d = date("d/m/Y");
     
     $sql= "
@@ -35,9 +35,9 @@ if(isset($_POST['addscore']))
         '$l',
         '$s',
         '$w',
-         $d);";
+         '$d');";
 
-    $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
+    //$result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
 
     if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
     {    
@@ -227,7 +227,7 @@ else
             </div>
 
 
-            <button type="submit" id="searchstudentbtn" name="addscore" class="btn btn-primary searchbtn mt-4">Add Score</button>                    
+            <button type="submit" id="searchstudentbtn" name="addscore" class="btn btn-dark searchbtn mt-4">Add Score</button>                    
             <button type="reset" class="btn btn-light mt-3">Clear</button>
 
         </div>

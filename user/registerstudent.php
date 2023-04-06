@@ -128,7 +128,7 @@ if(isset($_GET["spid"]))
     if(mysqli_num_rows($result)==1)
     {
         $student = mysqli_fetch_assoc($result);
-        $button = "<button type='submit' id='updatestudent' name='updatestudent' class='btn btn-primary mr-2 mt-3'>Update Student</button>";
+        $button = "<button type='submit' id='updatestudent' name='updatestudent' class='btn btn-dark mr-2 mt-3'>Update Student</button>";
     }
     else
     {
@@ -139,7 +139,7 @@ if(isset($_GET["spid"]))
 }
 else
 {
-    $button = " <button type='submit' id='addstudent' name='addstudent' class='btn btn-primary mr-2 mt-3'>Add Student</button>";
+    $button = " <button type='submit' id='addstudent' name='addstudent' class='btn btn-dark mr-2 mt-3'>Add Student</button>";
 }
 
 $genderBox= "";

@@ -36,7 +36,7 @@ if(mysqli_num_rows($result)>=1)
     <td>".$record['name']."</td>
     <td>".$record['gender']."</td>
     <td>".$record['dob']."</td>
-    <td>".$record['email']."</td>
+    <td class='e_copy'>".$record['email']."</td>
     <td>".$record['contact_no']."</td>
     <td>".$record['coach_name']."</td>
     <td>".$status."</td>
@@ -76,7 +76,46 @@ $student_card = "<tr>
 
     <!-- Page information -->
     <title>IELTS BUDDY | Faculty Dashboard</title>
+     
+     <style>
+        .tooltip {
+        position: relative;
+        display: inline-block;
+        }
 
+        .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 140px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 150%;
+        left: 50%;
+        margin-left: -75px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        }
+
+        .tooltip .tooltiptext::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #555 transparent transparent transparent;
+        }
+
+        .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+        }
+</style>
 </head>
 
 <body>
@@ -90,8 +129,24 @@ $student_card = "<tr>
                     <h6 id="daymode" class="font-weight-normal mb-10"></h6>
              </div>
         </div>
-             
+         <!-- Student Spid & Search Button-->
+         <div class="row">
+            <div class="col-lg-10 col-md-9 col-sm-12">
+
+                <div class="form-group">
+                <label>Student Email</label>
+                <input type="text" maxlength="256" minlength="3" name="_spid" class="form-control" id="Stud_spid" placeholder="Enter student email" required>
+                <input type="hidden" id="csrfToken" name="_csrfToken" value="<?php echo $JAMES->generateCsrfToken();?>" >  
+            </div>
+
+        </div>
+            <div class="form-group search_fetch_btn col-lg-2 mt-3 col-sm-12">
+                <button type="submit" id="search" class="btn btn-dark mr-2 mt-3">Search
+                </button>
+            </div>
+    <center><span class='tooltiptext' style="margin:auto;" id='myTooltip'></span></center>
         <div class="table-responsive mt-4">
+
             <table id="" class="table">
                 <thead>
                     <tr>

@@ -13,9 +13,9 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
 
 $student_card = "";
 
-if(isset($_POST['_spid'])&&isset($_POST['_csrfToken'])&&$_POST['_csrfToken']==$_SESSION['_csrfToken']&&isset($_SESSION['_userId']))
+if(isset($_POST['stud_selection'])&&isset($_POST['_csrfToken'])&&$_POST['_csrfToken']==$_SESSION['_csrfToken']&&isset($_SESSION['_userId']))
 {
-    $spid = $JAMES->sanitizeInput($_POST['_spid']);
+    $spid = $JAMES->sanitizeInput($_POST['stud_selection']);
 
     //@query
     $sql = "select Test_Exam_Score.* from Students,Test_Exam_Score where Test_Exam_Score.stud_id=Students.stud_id and Students.email='$spid';"; 
@@ -27,7 +27,7 @@ if(isset($_POST['_spid'])&&isset($_POST['_csrfToken'])&&$_POST['_csrfToken']==$_
         while($record = mysqli_fetch_assoc($result))
         {
 
-        $overall = $record['reading_band']+$record['listening_band']+$record['writing_band']+$record['speaking_band'];
+        $overall =  floatval($record['reading_band'])+ floatval($record['listening_band'])+floatval($record['writing_band'])+floatval($record['speaking_band']);
         $overall /=4;
         $overall = round($overall);
 
@@ -62,6 +62,27 @@ else
     <td  colspan='6' style='font-size:1.2em;text-align:center;'>No Data to Display</td>
     </tr>";
 }
+
+//fetch related classroom id's
+$sql= "select email from Students;";//query
+$result = mysqli_query($JAMES->connection(),$sql);
+
+if(mysqli_num_rows($result)>0)
+{
+    $classroom_codes = "<label>Student Selection:</label><select name='stud_selection' id='classcode_selection' class='form-control' required><option value=''>Not Selected</option></option>";
+
+    while($record = mysqli_fetch_assoc($result))
+    {
+      $classroom_codes.="<option value='".$record['email']."' >".$record['email']."</option>";
+    }
+
+    $classroom_codes.="</select>";
+}
+else
+{
+  $classroom_codes = "<label>Classroom Code</label><select name='stud_selection' id='classcode_selection' class='form-control'><option value='0'>Not Selected</option></option></select>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,7 +120,7 @@ else
              
         <div class="row">
 
-        <button type='button' onclick="window.history.back()" style="verticle-align:middle;padding:9px;width:90px;height:40px;float:left;position:relative;bottom:10px;display:inline;border-radius:12px;" class='btn form-control btn-primary btn-icon-text ml-3 mb-3'>
+        <button type='button' onclick="window.history.back()" style="verticle-align:middle;padding:9px;width:90px;height:40px;float:left;position:relative;bottom:10px;display:inline;border-radius:12px;" class='btn form-control btn-dark btn-icon-text ml-3 mb-3'>
                                                         
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
@@ -114,20 +135,23 @@ else
                         <form class="forms-sample" action="searchstudent.php" method="post" autocomplete="off">
 
                             <!-- Student Spid & Search Button-->
-                            <div class="row">
-                            <div class="col-lg-10 col-md-9 col-sm-12">
+                            <!-- <div class="row">
+                                <div class="col-lg-10 col-md-9 col-sm-12">
 
-                                <div class="form-group">
-                                <label>Student Email</label>
-                                <input type="text" maxlength="256" minlength="3" name="_spid" class="form-control" id="Stud_spid" placeholder="Enter student email" required>
+                                    <div class="form-group">
+                                    <label>Student Email</label>
+                                    <input type="text" maxlength="256" minlength="3" name="_spid" class="form-control" id="Stud_spid" placeholder="Enter student email" required>
+                                    
+                                </div>
+
+                            </div>
+                            -->
+                                <?php echo $classroom_codes;?>
                                 <input type="hidden" id="csrfToken" name="_csrfToken" value="<?php echo $JAMES->generateCsrfToken();?>" >  
-                            </div>
-
-                            </div>
-                            <div class="form-group search_fetch_btn col-lg-2 mt-3 col-sm-12">
-                                <button type="submit" id="search" class="btn btn-primary mr-2 mt-3">Search
-                                </button>
-                            </div>
+                                <div class="form-group search_fetch_btn col-lg-2 mt-3 col-sm-12">
+                                    <button type="submit" id="search" class="btn btn-dark mr-2 mt-3">Search
+                                    </button>
+                                </div> 
                             </div>
                         </form>
                     </div>
@@ -139,7 +163,7 @@ else
                     <tr>
                         <th>Date</th>
                         <th>Reading</th>
-                        <th>Litening</th>
+                        <th>Listening</th>
                         <th>Writing</th>
                         <th>Speaking</th>
                         <th>OverAll</th>

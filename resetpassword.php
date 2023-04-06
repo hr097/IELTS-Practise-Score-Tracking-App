@@ -114,7 +114,7 @@ else
                                     </div>
 
                                     <div class="mt-2 text-center">
-                                        <input type="button" id="resetpasswordbtn" class="btn btn-primary btn-icon-text" style="width:165px;" value="Reset"></input>
+                                        <input type="button" id="resetpasswordbtn" class="btn btn-dark btn-icon-text" style="width:165px;" value="Reset"></input>
                                     </div>
                                 </form>
                                 <!-- Form : End -->
