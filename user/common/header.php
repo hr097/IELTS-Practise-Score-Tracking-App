@@ -113,12 +113,12 @@
                         </div>
                     </li>
                      -->
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="./profile.php" aria-expanded="false" aria-controls="ui-basic">
-                            <i class="icon-head menu-icon ti-id-badge"></i>
-                            <span class="menu-title">Profile</span>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./ieltsspeaking.php" aria-expanded="false" aria-controls="ui-basic">
+                            <i class="icon-head menu-icon ti-comment-alt"></i>
+                            <span class="menu-title">Speaking</span>
                         </a>
-                    </li> -->
+                    </li>
 
                     <li class="nav-item">
                         <a class="nav-link" href="registerstudent.php" aria-expanded="false" aria-controls="ui-basic">

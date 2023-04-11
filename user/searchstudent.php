@@ -12,54 +12,102 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
 
 
 $student_card = "";
+$student_card1 = "";
 
 if(isset($_POST['stud_selection'])&&isset($_POST['_csrfToken'])&&$_POST['_csrfToken']==$_SESSION['_csrfToken']&&isset($_SESSION['_userId']))
 {
     $spid = $JAMES->sanitizeInput($_POST['stud_selection']);
 
-    //@query
-    $sql = "select Test_Exam_Score.* from Students,Test_Exam_Score where Test_Exam_Score.stud_id=Students.stud_id and Students.email='$spid';"; 
-    $result = mysqli_query($JAMES->connection(),$sql);
+    $testType = $_POST['examType'];
+    if($testType=="speaking")
+    {
+        $sql = "select Speaking_Test_Exam_Score.* from Students,Speaking_Test_Exam_Score where Speaking_Test_Exam_Score.stud_id=Students.stud_id and Students.email='$spid';"; 
+        $result = mysqli_query($JAMES->connection(),$sql);
     
-    if(mysqli_num_rows($result)>=1)
-    {   
-        $student = "";
-        while($record = mysqli_fetch_assoc($result))
-        {
-
-        $overall =  floatval($record['reading_band'])+ floatval($record['listening_band'])+floatval($record['writing_band'])+floatval($record['speaking_band']);
-        $overall /=4;
-        $overall = round($overall);
-
-        $student.=
-        "
-        <tr class='student'>
-        <td>".$record['date']."</td>
-        <td>".$record['reading_band']."</td>
-        <td>".$record['listening_band']."</td>
-        <td>".$record['speaking_band']."</td>
-        <td>".$record['writing_band']."</td>
-        <td>".$overall."</td>
-        </td>
-        </tr>
-        ";
-
+        if(mysqli_num_rows($result)>=1)
+        {   
+            $student = "";
+            
+            while($record = mysqli_fetch_assoc($result))
+            {
+    
+            $student.=
+            "
+            <tr class='student'>
+            <td>".$record['date']."</td>
+            <td>".$record['intro']."</td>
+            <td>".$record['cue_card']."</td>
+            <td>".$record['follow']."</td>
+            <td>".$record['overall']."</td>
+            <td>".$record['errors']."</td>
+            <td>".$record['suggestion']."</td>
+            </tr>
+            ";
+    
+            }
+    
+            $student_card1.=$student;
         }
-
-        $student_card.=$student;
+        else
+        {
+            $student_card1 = "<tr>
+            <td  colspan='7' style='font-size:1.2em;text-align:center;'>Student Score Data Not Found!</td>
+            </tr>";
+        }
     }
     else
     {
-        $student_card = "<tr>
-        <td  colspan='6' style='font-size:1.2em;text-align:center;'>Student Score Data Not Found!</td>
-        </tr>";
+        $sql = "select Test_Exam_Score.* from Students,Test_Exam_Score where Test_Exam_Score.stud_id=Students.stud_id and Students.email='$spid';"; 
+        $result = mysqli_query($JAMES->connection(),$sql);
+    
+        if(mysqli_num_rows($result)>=1)
+        {   
+            $student = "";
+            
+            while($record = mysqli_fetch_assoc($result))
+            {
+    
+            $overall =  floatval($record['reading_band'])+ floatval($record['listening_band'])+floatval($record['writing_band'])+floatval($record['speaking_band']);
+            $overall /=4;
+            $overall = round($overall);
+    
+            $student.=
+            "
+            <tr class='student'>
+            <td>".$record['date']."</td>
+            <td>".$record['reading_band']."</td>
+            <td>".$record['listening_band']."</td>
+            <td>".$record['speaking_band']."</td>
+            <td>".$record['writing_band']."</td>
+            <td>".$overall."</td>
+            </td>
+            </tr>
+            ";
+    
+            }
+    
+            $student_card.=$student;
+        }
+        else
+        {
+            $student_card = "<tr>
+            <td  colspan='6' style='font-size:1.2em;text-align:center;'>Student Score Data Not Found!</td>
+            </tr>";
+        }
     }
+    //@query
+
+
 }
 else
 {
     
-    $student_card = "<tr>
+     $student_card = "<tr>
     <td  colspan='6' style='font-size:1.2em;text-align:center;'>No Data to Display</td>
+    </tr>";
+
+    $student_card1 ="<tr>
+    <td  colspan='7' style='font-size:1.2em;text-align:center;'>No Data to Display</td>
     </tr>";
 }
 
@@ -147,6 +195,12 @@ else
                             </div>
                             -->
                                 <?php echo $classroom_codes;?>
+                                <br>
+                                <label>Exam Type:</label>
+                                <select name='examType' class='form-control' required>
+                                    <option value='mock' selected>Mock Test</option>
+                                    <option value='speaking' >Speaking</option>
+                                </select>
                                 <input type="hidden" id="csrfToken" name="_csrfToken" value="<?php echo $JAMES->generateCsrfToken();?>" >  
                                 <div class="form-group search_fetch_btn col-lg-2 mt-3 col-sm-12">
                                     <button type="submit" id="search" class="btn btn-dark mr-2 mt-3">Search
@@ -157,11 +211,33 @@ else
                     </div>
                 </div>
             </div>
+
             <div class="table-responsive mt-4">
+            <h4>Speaking Test:</h4>
             <table id="" class="table">
                 <thead>
                     <tr>
-                        <th>Date</th>
+                        <th>DateTime</th>
+                        <th>Intro</th>
+                        <th>Cue Card</th>
+                        <th>Follow Up</th>
+                        <th>OverAll</th>
+                        <th>Errors</th>
+                        <th>Suggestions</th>
+                    </tr>
+                </thead>
+                <tbody id="searchstudent">
+                    <tr>
+                        <?php echo $student_card1; ?>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-responsive mt-4">
+            <h4>Mock Test:</h4>
+            <table id="" class="table">
+                <thead>
+                    <tr>
+                        <th>DateTime</th>
                         <th>Reading</th>
                         <th>Listening</th>
                         <th>Writing</th>

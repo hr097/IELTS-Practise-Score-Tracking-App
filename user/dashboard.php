@@ -11,7 +11,7 @@ if(!($JAMES->checkSession()&&$_SESSION["_userType"]==="1"))
 }
 
 $student_card = "";
-$sql = "select * from Students;"; 
+$sql = "select * from Students;";
 $result = mysqli_query($JAMES->connection(),$sql);
 
 if(mysqli_num_rows($result)>=1)

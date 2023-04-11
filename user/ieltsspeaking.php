@@ -20,21 +20,25 @@ if(isset($_POST['addscore']))
   
     //PERSONAL
     $stud_spid = $JAMES->sanitizeInput($_POST['stud_selection']);
-    $r = $JAMES->sanitizeInput($_POST['scoreBoxReading']);
-    $l = $JAMES->sanitizeInput($_POST['scoreBoxListening']);
-    $s = $_POST['scoreBoxSpeaking'];
-    $w = $_POST['scoreBoxWriting'];
-    $d = date("d/m/Y") + date("h:i:s A");
+    $intro = $JAMES->sanitizeInput($_POST['scoreBoxIntro']);
+    $follow = $JAMES->sanitizeInput($_POST['scoreBoxFollow']);
+    $cue = $_POST['scoreBoxCue'];
+    $overall = $_POST['scoreBoxOverall'];
+    $errors = $JAMES->sanitizeInput($_POST['errors']);
+    $suggestion = $JAMES->sanitizeInput($_POST['suggetions']);
+    $d = date("d/m/Y") . " " .date("h:i:s A");
     
     $sql= "
-        insert into Test_Exam_Score 
-        (stud_id,reading_band,listening_band,speaking_band,writing_band,date)
+        insert into Speaking_Test_Exam_Score 
+        (stud_id,intro,cue_card,follow,overall,errors,suggestion,date)
         values(
         '$stud_spid',
-        '$r',
-        '$l',
-        '$s',
-        '$w',
+        '$intro',
+        '$cue',
+        '$follow',
+        '$overall',
+        '$errors',
+        '$suggestion',
          '$d');";
 
     //$result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
@@ -42,7 +46,7 @@ if(isset($_POST['addscore']))
     if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
     {    
 
-        $error="<span id='response_msg' style='color:green;float:right;'>Score Added Successfully!</span>";
+        $error="<span id='response_msg' style='color:green;float:right;'>Speaking Score Added Successfully!</span>";
         $error.="<script>setTimeout(function(){ $('#response_msg').html(''); },3000);</script>";
 
     }
@@ -93,7 +97,7 @@ else
     <link rel="stylesheet" href="../css/faculty.css">
 
     <!-- js  -->
-    <script src="../js/faculty/dashboard.js" type="text/javascript" defer=true></script>
+    <script src="../js/faculty/ieltsspeaking.js" type="text/javascript" defer=true></script>
 
     <!-- Page information -->
     <title>IELTS BUDDY| Faculty Dashboard</title>
@@ -107,7 +111,7 @@ else
         <div class="content-wrapper">
         <div class="row">
              <div class="col-12 col-xl-8 mb-4 mb-xl-50">
-                    <h3 class="font-weight-bold">Welcome  Coach,
+                    <h3 class="font-weight-bold">Speaking Evaluation
                     </h3>
                     <h6 id="daymode" class="font-weight-normal mb-10"></h6>
              </div>
@@ -116,16 +120,31 @@ else
 
         <input type="hidden" id="csrfToken" name="_csrfToken" value="<?php echo $JAMES->generateCsrfToken();?>" >
         <h4 class="card-title"><?php echo $error;?></h4>
-        <form autocomplete="off" class="forms-sample" name="addstudents" action='addscore.php' method="POST" enctype="multipart/form-data">
+        <form autocomplete="off" class="forms-sample" name="addstudents" action='ieltsspeaking.php' method="POST" enctype="multipart/form-data">
 
                               
         <?php echo $classroom_codes;?>
         <br>
 
         <div class="row">
+            <!-- Errors-->   
+            <div class="form-group form-group col-sm-12 col-md-12 col-lg-12">
+                <label>Errors Type:</label>
+                <input type="text" autocomplete="off" name="errors" minlength="1"  maxlength="1000" class="form-control" id="studname" placeholder="Errors made by candidate" required>
+            </div>
+
+            <!-- Suggestions-->
+            <div class="form-group form-group col-sm-12 col-md-12 col-lg-12">
+                <label>Suggestion:</label>
+                <input type="text" autocomplete="off" name="suggetions" minlength="1"  maxlength="1000" class="form-control" id="studname2" placeholder="Suggestions given by examiner" required>
+            </div>
+       </div>
+
+        <div class="row">
+
             <div class="form-group mb-5 col-sm-6 col-md-6 col-lg-6">
-            <label>Reading Band Score:</label>
-            <select name='scoreBoxReading' class='form-control'>
+            <label>Introduction Score:</label>
+            <select name='scoreBoxIntro' class='form-control'>
                 <option value='0' selected>0</option>
                 <option value='0.5' >0.5</option>
                 <option value='1' >1</option>
@@ -149,8 +168,8 @@ else
             </div>
 
             <div class="form-group mb-5 col-sm-6 col-md-6 col-lg-6">
-            <label>Listening Band Score:</label>
-            <select name='scoreBoxListening' class='form-control'>
+            <label>Cue Card Score:</label>
+            <select name='scoreBoxCue' class='form-control'>
                 <option value='0' selected>0</option>
                 <option value='0.5' >0.5</option>
                 <option value='1' >1</option>
@@ -176,8 +195,8 @@ else
 
         <div class="row">
             <div class="form-group mb-5 col-sm-6 col-md-6 col-lg-6">
-            <label>Speaking Band Score:</label>
-            <select name='scoreBoxSpeaking' class='form-control'>
+            <label>Follow Up Score:</label>
+            <select name='scoreBoxFollow' class='form-control'>
                 <option value='0' selected>0</option>
                 <option value='0.5' >0.5</option>
                 <option value='1' >1</option>
@@ -201,8 +220,8 @@ else
             </div>
 
             <div class="form-group mb-5 col-sm-6 col-md-6 col-lg-6">
-            <label>Writing Band Score:</label>
-            <select name='scoreBoxWriting' class='form-control'>
+            <label>Overall Band Score:</label>
+            <select name='scoreBoxOverall' class='form-control'>
                 <option value='0' selected>0</option>
                 <option value='0.5' >0.5</option>
                 <option value='1' >1</option>
@@ -225,7 +244,6 @@ else
             </select>
 
             </div>
-
 
             <button type="submit" id="searchstudentbtn" name="addscore" class="btn btn-dark searchbtn mt-4">Add Score</button>                    
             <button type="reset" class="btn btn-light mt-3">Clear</button>
