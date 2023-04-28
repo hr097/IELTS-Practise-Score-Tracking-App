@@ -262,7 +262,7 @@ class AMS
     {
         $mail = new PHPMailer(true);
         //Enable SMTP debugging.
-        //$mail->SMTPDebug = 3;         //for debugging on only                      
+         //$mail->SMTPDebug = 3;         //for debugging on only                      
         //Set PHPMailer to use SMTP.
          $mail->isSMTP();           //*@comment it as vnsgu server can't send SMTP email it will send it from root domain 
                                     //! modified by hr097    
@@ -272,9 +272,9 @@ class AMS
         $mail->SMTPAuth = true;                          
         //Provide username and password     
         $mail->Username = "ridex.mobility@gmail.com";                 
-        $mail->Password = "hjsgxpuxlybnxjbj";     //token for app p @ s s w o r d                       
+        $mail->Password = "hxmurmsiormpqtkc";     //token for app p @ s s w o r d                       
         //If SMTP requires TLS encryption then set it
-        $mail->SMTPSecure = "tls";                           
+        $mail->SMTPSecure = "tls";                        
         //Set TCP port to connect to
         $mail->Port = 587;                                   
 
@@ -312,7 +312,7 @@ class AMS
 
     function __construct($userType="")
     {   
-
+        //$this->Debug();
         if($userType=="Admin")
         {
             $userType=1;
