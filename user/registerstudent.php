@@ -422,7 +422,7 @@ else
 
                                     <div class="form-group col-md-2 ">
                                         <button type="button" id="searchstudentbtn"
-                                            class="btn btn-primary searchbtn mt-4">Search</button>
+                                            class="btn btn-dark searchbtn mt-4">Search</button>
                                     </div>
                                 </div>
 

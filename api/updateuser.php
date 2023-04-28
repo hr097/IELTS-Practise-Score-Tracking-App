@@ -113,7 +113,7 @@ $JAMES->init_user_session();
                       <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                           <tr>
                               <td bgcolor='#ffffff' align='center' valign='top' style='padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #4b49ac; font-family: poppins; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;'>
-                                  <h1 style='font-size: 35px; font-weight: 500; margin: 2;'><b>Password updated</b></h1> <img src='https://live.staticflickr.com/65535/52097859173_5b6d3573df_n.jpg' width='250' height='120' style='display: block; border: 0px;' />
+                                  <h1 style='font-size: 35px; font-weight: 500; margin: 2;'><b>Password updated</b></h1> <img src='https://i.ibb.co/GTbqVVk/login-logo.png' width='250' height='120' style='display: block; border: 0px;' />
                               </td>
                           </tr>
                       </table>
