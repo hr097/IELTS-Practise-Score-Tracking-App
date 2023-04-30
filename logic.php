@@ -262,7 +262,7 @@ class AMS
     {
         $mail = new PHPMailer(true);
         //Enable SMTP debugging.
-         $mail->SMTPDebug = 3;         //for debugging on only                      
+         //$mail->SMTPDebug = 3;         //for debugging on only                      
         //Set PHPMailer to use SMTP.
          $mail->isSMTP();           //*@comment it as vnsgu server can't send SMTP email it will send it from root domain 
                                     //! modified by hr097    
@@ -301,7 +301,7 @@ class AMS
             $mail->send(); 
             return (true);
         } catch (Exception $e) {
-            echo "Mailer Error: " . $mail->ErrorInfo; // to print error if any and debugging
+           // echo "Mailer Error: " . $mail->ErrorInfo; // to print error if any and debugging
             return (false);
         }
 
