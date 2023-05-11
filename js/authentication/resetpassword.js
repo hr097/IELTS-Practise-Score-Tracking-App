@@ -17,7 +17,7 @@ function setCookie(cname, cvalue, exdays) {
 
 /* END::CREDENTIALS CHECK */
 
-window.addEventListener("blur",function(){window.location.replace("./logout.php")}); // Exit on loosing focus of window
+window.addEventListener("blur",function(){window.location.replace("./php/logout.php")}); // Exit on loosing focus of window
 
 /* START:: TOGGLE PASSWORD*/
 

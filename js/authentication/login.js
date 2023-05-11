@@ -64,8 +64,8 @@ function getCookie(cname) {
   return "";
 }
 
-var encryptCred = (str) => { return (CryptoJS.AES.encrypt(str,"ieltsbuddy")); }        
-var decryptCred = (str) => { return ( CryptoJS.AES.decrypt(str, "ieltsbuddy").toString(CryptoJS.enc.Utf8) ); }        
+var encryptCred = (str) => { return (CryptoJS.AES.encrypt(str,"ams.vnsguit.org")); }        
+var decryptCred = (str) => { return ( CryptoJS.AES.decrypt(str, "ams.vnsguit.org").toString(CryptoJS.enc.Utf8) ); }        
 
 /* END::CREDENTIALS CHECK */
 
@@ -152,9 +152,13 @@ $(document).ready(function(){
 
                   if(response===1)
                   {
-                    window.location.replace("./user/dashboard.php");
+                    window.location.replace("./student/dashboard.php");
                   }
                   else if(response===2)
+                  {
+                    window.location.replace("./faculty/dashboard.php")
+                  }
+                  else if(response===3)
                   {
                        window.location.replace("./admin/dashboard.php");
                   }

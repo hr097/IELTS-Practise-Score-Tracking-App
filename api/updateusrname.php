@@ -1,11 +1,11 @@
 <?php
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin:ams.vnsguit.org'); 
+//header('Access-Control-Allow-Origin:ams.vnsguit.org'); 
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods,Authorization');
 
-require_once("../ams.php");
+require_once("../logic.php");
 $JAMES = new AMS("Admin");
 $JAMES->init_user_session();
     
@@ -176,7 +176,7 @@ $JAMES->init_user_session();
     function checkUserExists($u) 
     {        
         //@query
-        $sql = "select username,user_type from vw_users_auth where username='$u';";
+        $sql = "select username,user_type from users where username='$u';";
     
         $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
     
@@ -196,7 +196,7 @@ $JAMES->init_user_session();
         if(!checkUserExists($nu))
         {
             //@query
-            $sql = "update Users set username='$nu' where username='$ou';";
+            $sql = "update users set username='$nu' where username='$ou';";
     
             if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
             {   

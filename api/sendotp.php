@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin:ieltsbuddy.ml');
+//header('Access-Control-Allow-Origin:ieltsbuddy.ml');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods,Authorization');
 
@@ -197,7 +197,7 @@ function sendOtpEmail()
 function checkUserExists($u) 
 {        
     //@query
-    $sql = "select username,user_type from Users where username='$u';";
+    $sql = "select username,user_type from users where username='$u';";
 
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
 

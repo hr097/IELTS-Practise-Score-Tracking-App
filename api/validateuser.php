@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin:ieltsbuddy.ml');
+//header('Access-Control-Allow-Origin:ieltsbuddy.ml');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods,Authorization');
 
@@ -12,7 +12,7 @@ $JAMES->init_user_session();
 function validate_user($u,$p) 
 {    
     //@query
-    $sql = "select username,password,user_type from Users where username='$u';"; 
+    $sql = "select username,password,user_type from users where username='$u';"; 
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
 
     if(mysqli_num_rows($result)===1)

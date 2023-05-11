@@ -1,7 +1,8 @@
 <?php
 
+
 use PHPMailer\PHPMailer\PHPMailer;
-//use PHPMailer\PHPMailer\SMTP;  //@change as vnsgu server can't send SMTP email it will send it from root domain  //!modified by hr097
+// use PHPMailer\PHPMailer\SMTP;  //@change as vnsgu server can't send SMTP email it will send it from root domain  
 use PHPMailer\PHPMailer\Exception;
 
 require_once("vendor/autoload.php");
@@ -74,19 +75,21 @@ class AMS
 
             switch($userType)
             {
-                case 1:{
-                        $this->userName = "epiz_33942992";   //!modified by hr097
-                        $this->password = "9qfIxM4dd9rI4S";   //? add credentials
-                        break;
-                        }
-                case 2:{
-                        $this->userName = "epiz_33942992";   //!modified by hr097
-                        $this->password = "9qfIxM4dd9rI4S";   //? add credentials
-                        break;
-                        }
+                case 1:
+                    {
+                    $this->userName = "epiz_33942992";   //!modified by hr097
+                    $this->password = "9qfIxM4dd9rI4S";   //? add credentials
+                    break;
+                    }
+                case 2: 
+                    {
+                    $this->userName = "epiz_33942992";   //!modified by hr097
+                    $this->password = "9qfIxM4dd9rI4S";   //? add credentials
+                    break;
+                    }
                 default: 
                     {
-                        $this->userName = "root"; // localhost credentials for windows based systems
+                        $this->userName = "root"; // localhost credentials
                         $this->password = "";
                         break; 
                     }
@@ -96,7 +99,7 @@ class AMS
 
             if(!$this->db_connection)
             {   
-                //echo mysqli_connect_error(); //* for debugging purposes
+                //echo mysqli_connect_error();
                 return false;
             }
             else
@@ -119,13 +122,13 @@ class AMS
         return($this->db_connection);
     }
     
-    public function Debug()//* to debug error on production
+    public function Debug()// to debug error on production
     {
         error_reporting(E_ALL); 
         ini_set('display_errors', 1);
     }
 
-    public function generatePassword()// random default password generation
+    public function generatePassword()// to debug error on production
     {   
         $data0 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         $data1 = "abcdefghijklmnopqrstuvwxyz";
@@ -217,15 +220,19 @@ class AMS
     {
         if($type===1)
         {
-            $this->ams_redirect("./user/dashboard.php");
+            $this->ams_redirect("./student/dashboard.php");
         }
         else if($type===2)
+        {
+            $this->ams_redirect("./faculty/dashboard.php");
+        }
+        else if($type===3)
         {
             $this->ams_redirect("./admin/dashboard.php");
         }
         else
         {
-            $this->ams_redirect("index.php");
+            $this->ams_redirect("./index.php");
         }
     }
     public function startSession($userName,$amsUserType)
@@ -272,7 +279,7 @@ class AMS
         $mail->SMTPAuth = true;                          
         //Provide username and password     
         $mail->Username = "ridex.mobility@gmail.com";                 
-        $mail->Password = "hxmurmsiormpqtkc";     //token for app p @ s s w o r d                       
+        $mail->Password = "jhutkhpromzccxxm";     //token for app p @ s s w o r d                       
         //If SMTP requires TLS encryption then set it
         $mail->SMTPSecure = "tls";                        
         //Set TCP port to connect to
@@ -307,12 +314,14 @@ class AMS
 
     }
 
+
     
     //* END:: PUBLIC FUNCTIONS  */
 
     function __construct($userType="")
     {   
         $this->Debug();
+
         if($userType=="Admin")
         {
             $userType=1;
@@ -321,7 +330,7 @@ class AMS
         {
             $userType=2;
         }
-        
+
         $this->serverName = "sql210.epizy.com";
 
         $databaseName = "epiz_33942992_ielts_buddy";    //! modified by hr097    
@@ -329,19 +338,17 @@ class AMS
         if($_SERVER['SERVER_NAME']==="localhost")
         {
             $userType=3;
-
+            
             $this->serverName = "localhost";
 
-            $databaseName = "ielts_buddy";    //! modified by hr097    
-        
+            $databaseName = "ielts_buddy";    //! modified by hr097 
         }
-        
+       
+
         $this->set_server_configuration();
 
         $this->todayDate= date("d/m/Y"); // fetch today date
         $this->todayTime = date("h:i:s A",  time()); // fetch current time
-
-
 
         if(!$this->ams_db_connect($databaseName,$userType))
         {

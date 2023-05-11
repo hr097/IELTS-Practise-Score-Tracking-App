@@ -1,7 +1,7 @@
 <?php
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin:ieltsbuddy.ml');
+//header('Access-Control-Allow-Origin:ieltsbuddy.ml');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type, Access-Control-Allow-Methods,Authorization');
 
@@ -173,7 +173,7 @@ $JAMES->init_user_session();
     function update_user($u,$p)
     {   
         //@query
-        $sql = "update Users set password='$p' where username='$u';";
+        $sql = "update users set password='$p' where username='$u';";
 
         if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
         {   
