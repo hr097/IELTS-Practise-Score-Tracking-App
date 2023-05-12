@@ -123,7 +123,7 @@ function sendLoginInvitation($stud_name,$student_email,$password)
                     <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                         <tr>
                             <td bgcolor='#ffffff' align='center' valign='top' style='padding: 40px 20px 20px 20px; border-radius: 4px 4px 0px 0px; color: #4b49ac; font-family: poppins; font-size: 48px; font-weight: 400; letter-spacing: 4px; line-height: 48px;'>
-                                <h1 style='font-size: 35px; font-weight: 500; margin: 2;'><b>Registration Successful</b></h1> <img src='https://live.staticflickr.com/65535/52097859173_5b6d3573df_n.jpg' width='250' height='120' style='display: block; border: 0px;' />
+                                <h1 style='font-size: 35px; font-weight: 500; margin: 2;'><b>Registration Successful</b></h1> <img src='https://i.ibb.co/GTbqVVk/login-logo.png' width='250' height='120' style='display: block; border: 0px;' />
                             </td>
                         </tr>
                     </table>
@@ -135,12 +135,12 @@ function sendLoginInvitation($stud_name,$student_email,$password)
                     <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
                         <tr>
                             <td bgcolor='#ffffff' align='center' style='padding: 20px 30px 20px 30px; color: #000000; font-family: poppins; font-size: 14px; font-weight: 400; line-height: 30px;'>
-                                <p style='margin: 0; '><span style='font-size: 20px;'>Welcome ,<br><b>Mr./Ms. ".$stud_name."</b></span><br><br>This is to notify that you're successfully registered as a <b>student</b> on digital attendance platform of <b>Department of ICT,VNSGU</b>.<br>                               
+                                <p style='margin: 0; '><span style='font-size: 20px;'>Welcome ,<br><b>Mr./Ms. ".$stud_name."</b></span><br><br>This is to notify that you're successfully registered as a <b>student</b> on digital attendance platform of <b>IELTS BUDDY</b>.<br>                               
                                 </p>
                                 <p style='margin-top:25px;font-size:18px;'><b>Your credentials are given below: </b></p>
                                 <p style='margin-top:40px;'> <b>Username:    </b>  <em>".$student_email."</em> </p>
                                 <p> <b>Password:    </b>   <em> ".$password." </em> </p>
-                                <p> <b>Dashboard:   </b>   <a href='https://ams.vnsguit.org/login.php'> login here  </a></p>
+                                <p> <b>Dashboard:   </b>   <a href='http://ieltsbuddy.epizy.com'> login here  </a></p>
                             </td>
                         </tr>
                     </table>
@@ -162,25 +162,25 @@ function sendLoginInvitation($stud_name,$student_email,$password)
                               <!-- <em>Please be noted that in your upcoming academic years, your lecture and lab attendances will be taken digitally and reflected into your dedicated account given by institution on its portal.
                                   Best wishes for your academic journey!</em> -->
 
-                              <p style='margin:0;text-align: center;'><br><b><a style='color:black;' href='mailto:ams.jpd@gmail.com' >JPD AMS Admin</a>,</b><br>Department of Information, Communication & Technology,<br>Veer Narmad South Gujarat University,<br>Surat-395007<br></p>
+                              <p style='margin:0;text-align: center;'><br><b><a style='color:black;' href='mailto:harshilramani9777@gmail.com' > IELTS BUDDY Admin</a></b></p>
                           </td>
                       </tr>
                   </table>
               </td>
            </tr>
 
-          <tr>
-                <td bgcolor='#f4f4f4' align='center' style='padding: 30px 10px 40px 10px;'>
-                    <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
-                        <tr>
-                            <td align='center' style='color: white!important;background-color:#5755a5;padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: poppins; font-size: 18px; font-weight: 400; line-height: 30px;'>
-                                <h2 style='font-size:18px; font-weight: 400; color: white!important; margin: 0;'>Have any questions for us or need more information ? </h2>
-                                <p style='margin: 0;'><a href='mailto:ams.jpd@gmail.com' target='_blank' style='color: white !important;text-decoration:underline;'><b>Just shoot us an email!<br> We are always here to help.</b></a><a style='color:white;font-size:16px;' ><br>ams.jpd@gmail.com</a></p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+           <tr>
+           <td bgcolor='#f4f4f4' align='center' style='padding: 30px 10px 40px 10px;'>
+               <table border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;'>
+                   <tr>
+                       <td align='center' style='background : #5755a5;padding: 30px 30px 30px 30px; border-radius: 4px 4px 4px 4px; color: #666666; font-family: poppins; font-size: 18px; font-weight: 400; line-height: 30px;'>
+                           <h2 style='font-size:18px; font-weight: 400; color: #ffffff; margin: 0;'>Have any questions for us or need more information ? 
+                           <p style='margin: 0;'><a href='mailto:harshilramani9777@gmail.com' target='_blank' style='color: black;'><b>Just shoot us an email!<br> We are always here to help.</b></a><a style='color:#000000;font-size:16px;' ><br>IELTS BUDDY</a></p>
+                       </td>
+                   </tr>
+               </table>
+           </td>
+           </tr>
         </table>
     </body>
     
@@ -194,7 +194,7 @@ function sendLoginInvitation($stud_name,$student_email,$password)
 
 function findcourseId($cname)
 {
-    $sql= "select * from Courses where course_name='$cname';";//query
+    $sql= "select * from courses where course_name='$cname';";//query
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
 
     if(mysqli_num_rows($result)>0)
@@ -333,7 +333,7 @@ if(isset($_POST['addstudent']))
         $password = $GLOBALS['JAMES']->generatePassword();
         $password_enc = crypt($password,'$2a$10$1qAz2wSx3eDc4rFv5tGb5t');
 
-        $sql = "insert into users (username,password,user_type) values('$stud_email','$password_enc',1);";
+        $sql = "insert into users(username,password,user_type) values('$stud_email','$password_enc',1);";
 
         if(mysqli_query($GLOBALS['JAMES']->connection(),$sql))
         {    
@@ -412,7 +412,7 @@ if(isset($_GET["spid"]))
     $update_email = "readonly='true'";
     $spid = $JAMES->sanitizeInput($_GET["spid"]);
 
-    $sql= "select A.*,B.*,C.uid from students A,courses B,Rfid_uid_spid_map C where A.spid=C.spid and A.course_id=B.course_id AND A.spid='$spid';";
+    $sql= "select A.*,B.*,C.uid from students A,courses B,rfid_uid_spid_map C where A.spid=C.spid and A.course_id=B.course_id AND A.spid='$spid';";
 
     $result = mysqli_query($GLOBALS['JAMES']->connection(),$sql);
     
@@ -742,8 +742,8 @@ $division_html.= "</select>";
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Mother's Name</label>
-                                    <input type="text" autocomplete="off" name="mname" minlength="10"  maxlength="256" class="form-control dash" id="mname" placeholder="Enter Mother's Name"  value="<?php echo $student['mothers_name'];?>">
+                                    <label>Counsellor's Name</label>
+                                    <input type="text" autocomplete="off" name="mname" minlength="10"  maxlength="256" class="form-control dash" id="mname" placeholder="Enter Counsellor's Name"  value="<?php echo $studCounsellors_name'];?>">
                                 </div>
 
 

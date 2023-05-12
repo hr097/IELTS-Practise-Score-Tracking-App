@@ -29,8 +29,18 @@ function add_present($fid,$classroom_id,$pr_student_list)
         $sql[strlen($sql)-1] = ';';
 
         if(mysqli_query($GLOBALS['JAMES']->connection(),$sql)==1)
-        { 
-            return 1;
+        {   
+            $sql = "UPDATE ams_setup_students_map SET p_days = p_days + 1 WHERE spid ='$spid' and ams_setup_id='$classroom_id';";
+
+            if(mysqli_query($GLOBALS['JAMES']->connection(),$sql)==1)
+            {  
+                return 1;
+            }
+            else
+            {
+                return 0; 
+            }
+            
         }
         else
         {
@@ -60,8 +70,18 @@ function add_absent($fid,$classroom_id,$ab_student_list)
         $sql[strlen($sql)-1] = ';';
 
         if(mysqli_query($GLOBALS['JAMES']->connection(),$sql)==1)
-        { 
-            return 1;
+        {   
+            $sql = "UPDATE ams_setup_students_map SET a_days = a_days + 1 WHERE spid ='$spid' and ams_setup_id='$classroom_id';";
+
+            if(mysqli_query($GLOBALS['JAMES']->connection(),$sql)==1)
+            {  
+                return 1;
+            }
+            else
+            {
+                return 0; 
+            }
+            
         }
         else
         {
