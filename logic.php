@@ -77,14 +77,14 @@ class AMS
             {
                 case 1:
                     {
-                    $this->userName = "epiz_33942992";   //!modified by hr097
-                    $this->password = "9qfIxM4dd9rI4S";   //? add credentials
+                    $this->userName = "SERVER_USERNAME";   //!modified by hr097
+                    $this->password = "SERVER_PASSWORD";   //? add credentials
                     break;
                     }
                 case 2: 
                     {
-                    $this->userName = "epiz_33942992";   //!modified by hr097
-                    $this->password = "9qfIxM4dd9rI4S";   //? add credentials
+                    $this->userName = "SERVER_USERNAME";   //!modified by hr097
+                    $this->password = "SERVER_PASSWORD";   //? add credentials
                     break;
                     }
                 default: 
@@ -278,14 +278,14 @@ class AMS
         //Set this to true if SMTP host requires authentication to send email
         $mail->SMTPAuth = true;                          
         //Provide username and password     
-        $mail->Username = "ridex.mobility@gmail.com";                 
-        $mail->Password = "jhutkhpromzccxxm";     //token for app p @ s s w o r d                       
+        $mail->Username = "SERVER_EMAIL_USER@DOMAIN.COM";                 
+        $mail->Password = "PASS_ACCESS_TOKEN_FOR_APP";     //token for app p @ s s w o r d                       
         //If SMTP requires TLS encryption then set it
         $mail->SMTPSecure = "tls";                        
         //Set TCP port to connect to
         $mail->Port = 587;                                   
 
-        $mail->From = "ridex.mobility@gmail.com";
+        $mail->From = "SERVER_EMAIL_USER@DOMAIN.COM";
         $mail->FromName = "IELTS BUDDY!";
 
         $mail->addAddress($recipientAddress);
@@ -331,9 +331,9 @@ class AMS
             $userType=2;
         }
 
-        $this->serverName = "sql210.epizy.com";
+        $this->serverName = "DATABASE_USER_NAME";
 
-        $databaseName = "epiz_33942992_ielts_buddy";    //! modified by hr097    
+        $databaseName = "DATABASE_NAME";    //! modified by hr097    
 
         if($_SERVER['SERVER_NAME']==="localhost")
         {
@@ -341,7 +341,7 @@ class AMS
             
             $this->serverName = "localhost";
 
-            $databaseName = "ielts_buddy";    //! modified by hr097 
+            $databaseName = "DATABASE_NAME";    //! modified by hr097 
         }
        
 
